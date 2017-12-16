@@ -257,19 +257,19 @@ var CalcComponent = /** @class */ (function () {
             {
                 name: 'Plust',
                 cost: 190,
-                url: 'assets/textures/plust.jpg',
+                url: 'PhotoCalcDemo/assets/textures/plust.jpg',
                 id: 'plust'
             },
             {
                 name: 'Rakuski',
                 cost: 230,
-                url: 'assets/textures/gravi.jpg',
+                url: 'PhotoCalcDemo/assets/textures/gravi.jpg',
                 id: 'rakuski'
             },
             {
                 name: 'Gravel',
                 cost: 250,
-                url: 'assets/textures/gravel.jpg',
+                url: 'PhotoCalcDemo/assets/textures/gravel.jpg',
                 id: 'gravel'
             }
         ];
@@ -414,11 +414,11 @@ var PhotoLabelComponent = /** @class */ (function () {
             _this.currentMaterial = material;
         });
         this.Rooms = [
-            'assets/temp1.png',
-            'assets/temp2.png',
-            'assets/temp3.png',
-            'assets/temp4.png',
-            'assets/temp5.png'
+            'PhotoCalcDemo/assets/temp1.png',
+            'PhotoCalcDemo/assets/temp2.png',
+            'PhotoCalcDemo/assets/temp3.png',
+            'PhotoCalcDemo/assets/temp4.png',
+            'PhotoCalcDemo/assets/temp5.png'
         ];
     }
     PhotoLabelComponent.prototype.ngOnInit = function () {
