@@ -3,7 +3,7 @@ name: Call a check for 1 commit in branch
 on:
   pull_request:
     branches: [ master ]
-    types: [ opened, synchronize, ready_for_review ]
+    types: [ opened, synchronize, edited, ready_for_review ]
 
 jobs:
   call-one-commit-in-branch:
@@ -11,15 +11,23 @@ jobs:
 
     steps:
     - name: Git checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: '0'
-    - name: git
+    - name: Check git branches
       run: |
         # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
         git status
-        git tag
-        git describe
+        # git switch master
+        echo "branch:${{ github.head_ref || github.ref_name }}"
+        echo "base:$(git merge-base origin/master HEAD)"
+        git reset $(git merge-base origin/master HEAD)
+        echo "\t\nAfter reset\t\n"
+        git status
+        echo "\t\nAfter status"
+        git add -A
+        git commit -m "${{ github.event.pull_request.title }}"
+        git push origin HEAD:${{ github.head_ref || github.ref_name }} --force
