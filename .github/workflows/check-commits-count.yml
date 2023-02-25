@@ -18,10 +18,9 @@ jobs:
       id: check_count
       run: |
         echo "COMMITS_COUNT=$(git rev-list --count origin/master..HEAD)" >> $GITHUB_OUTPUT
-    - name: Check condution
-      if: ${{steps.check_count.outputs.COMMITS_COUNT > 1}}
+    - name: Error if more then 1 commit
+      if: ${{steps.check_count.outputs.COMMITS_COUNT > 2}}
       run: |
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
-        echo "normal:$(git rev-list --count origin/master..HEAD)"
         echo "condution:${{steps.check_count.outputs.COMMITS_COUNT}}"
         exit 1

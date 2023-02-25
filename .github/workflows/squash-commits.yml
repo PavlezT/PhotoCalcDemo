@@ -1,14 +1,16 @@
 name: Squash commits in branch
 
 on:
-  workflow_dispatch
-    # branches: [ master ]
+  # workflow_dispatch
+  pull_request:
+    types: [ labeled ]
+    branches: [ master ]
     # types: [ opened, synchronize, edited, ready_for_review ]
 
 jobs:
-  call-one-commit-in-branch:
+  squash-commits:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.label.name == 'squash' }}
     steps:
     - name: Git checkout
       uses: actions/checkout@v3
