@@ -19,7 +19,7 @@ jobs:
     - name: Squash commmits in PR
       run: |
         git config user.name "Github Actions Bot"
-        git config user.email "<>"
+        git config user.email "< >"
         git reset $(git merge-base origin/master HEAD)
         git status
         git add -A
