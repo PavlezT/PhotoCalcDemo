@@ -19,7 +19,7 @@ jobs:
       run: |
         git rev-list --count origin/master..HEAD --first-parent
     - name: Check condution
-      if: ${{steps.check_count.outputs.*}} > 1
+      if: ${{steps.check_count.outputs.stdout}} > 1
       run: |
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
         echo "normal:$(git rev-list --count origin/master..HEAD)"
