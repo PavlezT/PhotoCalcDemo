@@ -1,0 +1,27 @@
+name: Call a check for 1 commit in branch
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [ opened, synchronize, edited, ready_for_review ]
+
+jobs:
+  call-one-commit-in-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+    - name: Check commits count
+      id: check_count
+      run: |
+        echo "COMMITS_COUNT=$(git rev-list --count origin/master..HEAD)" >> $GITHUB_OUTPUT
+    - name: Check condution
+      if: ${{steps.check_count.outputs.COMMITS_COUNT > 1}}
+      run: |
+        echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
+        echo "normal:$(git rev-list --count origin/master..HEAD)"
+        echo "condution:${{steps.check_count.outputs.COMMITS_COUNT}}"
+        exit 1
