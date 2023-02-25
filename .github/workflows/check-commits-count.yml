@@ -15,7 +15,7 @@ jobs:
       with:
         fetch-depth: '0'
     - name: Check commits count
-      if: (git rev-list --count origin/master..HEAD --first-parent) > 1
+      if: $(git rev-list --count origin/master..HEAD --first-parent) > 1
       run: |
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
         echo "normal:$(git rev-list --count origin/master..HEAD)"
