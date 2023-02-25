@@ -23,5 +23,5 @@ jobs:
       run: |
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
         echo "normal:$(git rev-list --count origin/master..HEAD)"
-        echo "$(${{steps.check_count.outputs.stdout}} > 1)"
+        echo "condution:$(${{steps.check_count.outputs.stdout}})"
         exit 1
