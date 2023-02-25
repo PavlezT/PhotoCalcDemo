@@ -19,7 +19,7 @@ jobs:
       run: |
         echo "SELECTED_COLOR=$(git rev-list --count origin/master..HEAD --first-parent)" >> $GITHUB_OUTPUT
     - name: Check condution
-      if: ${{steps.check_count.outputs.SELECTED_COLOR}} > 1
+      if: ${{steps.check_count.outputs.SELECTED_COLOR > 1}}
       run: |
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
         echo "normal:$(git rev-list --count origin/master..HEAD)"
