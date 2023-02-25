@@ -1,0 +1,25 @@
+name: Squash commits in branch
+
+on:
+  workflow_dispatch
+    # branches: [ master ]
+    # types: [ opened, synchronize, edited, ready_for_review ]
+
+jobs:
+  call-one-commit-in-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+    - name: Squash commmits in PR
+      run: |
+        git config user.name "Github Actions Bot"
+        git config user.email "<>"
+        git reset $(git merge-base origin/master HEAD)
+        git status
+        git add -A
+        git commit -m "${{ github.event.pull_request.title }}"
+        git push origin HEAD:${{ github.head_ref || github.ref_name }} --force
