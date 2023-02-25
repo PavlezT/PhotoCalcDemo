@@ -16,5 +16,5 @@ jobs:
         fetch-depth: '0'
     - name: Check commits count
       run: |
-        echo "first_parent:${git rev-list master HEAD --count --first-parent}"
-        echo "normal:${git rev-list master HEAD --count}"
+        echo "first_parent:$(git rev-list master HEAD --count --first-parent)"
+        echo "normal:$(git rev-list master HEAD --count)"
