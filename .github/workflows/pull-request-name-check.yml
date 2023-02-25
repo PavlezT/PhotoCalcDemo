@@ -1,0 +1,20 @@
+on:
+  pull_request:
+    branches: [ master ]
+    types: [opened, edited, synchronize, reopened]
+
+   
+jobs:
+  call-one-commit-in-branch:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: deepakputhraya/action-pr-title@master
+      with:
+        # regex: '([a-z])+\/([a-z])+' # Regex the title should match.
+        allowed_prefixes: 'TL-' # title should start with the given prefix
+        # disallowed_prefixes: 'tl' # title should not start with the given prefix
+        prefix_case_sensitive: true # title prefix are case insensitive
+        min_length: 5 # Min length of the title
+        # max_length: 20 # Max length of the title
+        github_token: ${{ github.token }} # Default: ${{ github.token }}
