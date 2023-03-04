@@ -16,12 +16,30 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: '0'
-    - name: Squash commmits in PR
+    - name: Config author
       run: |
         git config user.name "${{github.event.pull_request.user.login}}"
-        git config user.email "< >"
+        git config user.email "$(git log -n 1 --pretty=format:%ae)"
+    - name: Reset history
+      run: |
         git reset $(git merge-base origin/master HEAD)
         git status
+    - name: Make a commit 
+      run: |
         git add -A
         git commit -m "${{ github.event.pull_request.title }}"
-        git push origin HEAD:${{ github.head_ref || github.ref_name }} --force
+    - name: Push to origin
+      run: git push origin HEAD:${{ github.head_ref || github.ref_name }} --force
+    # - run: exit 0
+    - name: 'Remove label squash'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          setTimeout(() => {
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["squash"]
+            })
+          }, 70000)
