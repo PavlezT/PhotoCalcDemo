@@ -1,12 +1,12 @@
-name: Call a check for 1 commit in branch
+name: Checks for proper commit in branch
 
 on:
   pull_request:
     branches: [ master ]
-    types: [ opened, synchronize, edited, ready_for_review ]
+    types: [ opened, synchronize, edited, reopened, ready_for_review ]
 
 jobs:
-  call-one-commit-in-branch:
+  one-commit-in-branch:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +24,24 @@ jobs:
         echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
         echo "condution:${{steps.check_count.outputs.COMMITS_COUNT}}"
         exit 1
+
+  proper-commit-name:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Get commit title
+        id: commit_title
+        run: |
+          echo "${{github.head_ref}}"
+          git switch ${{github.head_ref}}
+          echo "COMMIT_TITLE=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          echo "commit_title:$(git log -1 --pretty=%B)"
+      - name: Error if commit is not PR title
+        if: ${{steps.commit_title.outputs.COMMIT_TITLE != github.event.pull_request.title}}
+        run: |
+          echo "pr_title:${{github.event.pull_request.title}}"
+          exit 1
