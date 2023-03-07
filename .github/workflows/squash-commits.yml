@@ -3,7 +3,7 @@ name: Squash commits in branch
 on:
   pull_request:
     types: [ labeled ]
-    branches: [ master ]
+    branches: [ dev ]
 
 jobs:
   squash-commits:
