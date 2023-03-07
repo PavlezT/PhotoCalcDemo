@@ -2,7 +2,7 @@ name: Checks for proper commit in branch
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ dev ]
     types: [ opened, synchronize, edited, reopened, ready_for_review ]
 
 jobs:
@@ -17,11 +17,11 @@ jobs:
     - name: Check commits count
       id: check_count
       run: |
-        echo "COMMITS_COUNT=$(git rev-list --count origin/master..HEAD)" >> $GITHUB_OUTPUT
+        echo "COMMITS_COUNT=$(git rev-list --count origin/dev..HEAD --no-merges)" >> $GITHUB_OUTPUT
     - name: Error if more then 1 commit
       if: ${{steps.check_count.outputs.COMMITS_COUNT > 2}}
       run: |
-        echo "first_parent:$(git rev-list --count origin/master..HEAD --first-parent)"
+        echo "first_parent:$(git rev-list --count origin/dev..HEAD --no-merges)"
         echo "condution:${{steps.check_count.outputs.COMMITS_COUNT}}"
         exit 1
 
