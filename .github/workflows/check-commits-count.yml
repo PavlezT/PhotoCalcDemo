@@ -19,7 +19,7 @@ jobs:
       run: |
         echo "COMMITS_COUNT=$(git rev-list --count origin/dev..HEAD --no-merges)" >> $GITHUB_OUTPUT
     - name: Error if more then 1 commit
-      if: ${{steps.check_count.outputs.COMMITS_COUNT > 2}}
+      if: ${{steps.check_count.outputs.COMMITS_COUNT > 1}}
       run: |
         echo "first_parent:$(git rev-list --count origin/dev..HEAD --no-merges)"
         echo "condution:${{steps.check_count.outputs.COMMITS_COUNT}}"
@@ -38,8 +38,8 @@ jobs:
         run: |
           echo "${{github.head_ref}}"
           git switch ${{github.head_ref}}
-          echo "COMMIT_TITLE=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-          echo "commit_title:$(git log -1 --pretty=%B)"
+          echo "COMMIT_TITLE=$(git log origin/dev..HEAD --pretty=%B | tail -2)" >> $GITHUB_OUTPUT
+          echo "commit_title:$(git log origin/dev..HEAD --pretty=%B | tail -2)"
       - name: Error if commit is not PR title
         if: ${{steps.commit_title.outputs.COMMIT_TITLE != github.event.pull_request.title}}
         run: |
