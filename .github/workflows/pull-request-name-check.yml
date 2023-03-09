@@ -6,9 +6,27 @@ on:
     types: [ opened, synchronize, edited, reopened, ready_for_review ]
 
 jobs:
+  update_pr:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
+    steps:
+    - uses: tzkhan/pr-update-action@v2
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        lowercase-branch: false
+        head-branch-regex: '^TL-[0-9]+$'
+        title-template: '%headbranch%'
+        title-update-action: 'prefix'
+        title-insert-space: true
+        body-template: |
+          [Link to %headbranch%](https://protonixltd.atlassian.net/browse/%headbranch%)
+        body-update-action: 'suffix'
+        body-newline-count: 1
+        body-uppercase-base-match: false
+
   title-validation:
     runs-on: ubuntu-latest
-    
+    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
     steps:
     - uses: deepakputhraya/action-pr-title@master
       with:
@@ -25,7 +43,7 @@ jobs:
     steps:
       - uses: deepakputhraya/action-branch-name@master
         with:
-          regex: '(^TL\-[0-9]{2,8}$)|(^temp[0-9a-zA-Z\-_]*)|(^fix[0-9a-zA-Z\-_]*)' # Regex the branch should match. This example enforces grouping
+          regex: '(^TL\-[0-9]{2,8}$)|(^temp[0-9a-zA-Z\-_]*)|(^dev[0-9a-zA-Z\-_]*)' # Regex the branch should match. This example enforces grouping
           #  allowed_prefixes: 'feature,stable,fix' # All
           ignore: master,dev,stage,staging # Ignore exactly matching branch names from convention
           min_length: 5 # Min length of the branch name
