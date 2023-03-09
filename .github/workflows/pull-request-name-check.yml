@@ -6,6 +6,23 @@ on:
     types: [ opened, synchronize, edited, reopened, ready_for_review ]
 
 jobs:
+  update_pr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: tzkhan/pr-update-action@v2
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        lowercase-branch: false
+        head-branch-regex: '^TL-[0-9]+$'
+        title-template: '%headbranch%'
+        title-update-action: 'prefix'
+        title-insert-space: true
+        body-template: |
+          [Link to %headbranch%](https://protonixltd.atlassian.net/browse/%headbranch%)
+        body-update-action: 'suffix'
+        body-newline-count: 1
+        body-uppercase-base-match: false
+
   title-validation:
     runs-on: ubuntu-latest
     
