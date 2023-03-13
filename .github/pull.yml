@@ -5,5 +5,7 @@ rules:                      # Array of rules
     mergeMethod: hardreset  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
     mergeUnstable: false    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
   - base: dev
-    upstream: master        # Required. Can be a branch in the same forked repo.
+    upstream: pavlezt:master 
+    mergeMethod: merge     
+    mergeUnstable: true   # Required. Can be a branch in the same forked repo.
 conflictLabel: "merge-conflict"     # Optional, on merge conflict assign a custom label, Default: merge-conflict
