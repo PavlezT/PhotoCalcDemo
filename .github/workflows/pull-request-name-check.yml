@@ -26,9 +26,9 @@ jobs:
 
   title-validation:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
     steps:
     - uses: deepakputhraya/action-pr-title@master
+      if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
       with:
         regex: '(^TL\-[0-9]{2,8}\s[a-zA-Z0-9]{1,})|(^TEMP\s)|(^FIX\s)' # Regex the title should match.
         # allowed_prefixes: 'TL-' # title should start with the given prefix
@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: deepakputhraya/action-branch-name@master
+        if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
         with:
           regex: '(^TL\-[0-9]{2,8}$)|(^temp[0-9a-zA-Z\-_]*)|(^dev[0-9a-zA-Z\-_]*)' # Regex the branch should match. This example enforces grouping
           #  allowed_prefixes: 'feature,stable,fix' # All
