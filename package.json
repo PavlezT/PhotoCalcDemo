@@ -1,6 +1,6 @@
 {
   "name": "photocalcdemo",
-  "version": "1.0.2",
+  "version": "1.0.14",
   "description": "",
   "main": "inline.bundle.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/PavlezT/PhotoCalcDemo.git"
   },
-  "author": "",
+  "author": "PavlezT",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PavlezT/PhotoCalcDemo/issues"

@@ -8,7 +8,7 @@ on:
 jobs:
   one-commit-in-branch:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
+    if: ${{ !contains(github.head_ref, 'temp') && !contains(github.head_ref, 'dev_') && github.head_ref != 'master' }}
     steps:
     - name: Git checkout
       uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
 
   proper-commit-name:
       runs-on: ubuntu-latest
-      if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
+      if: ${{ !contains(github.head_ref, 'temp') && !contains(github.head_ref, 'dev_') && github.head_ref != 'master'}}
       steps:
       - name: Git checkout
         uses: actions/checkout@v3

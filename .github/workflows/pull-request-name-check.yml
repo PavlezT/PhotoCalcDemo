@@ -8,7 +8,7 @@ on:
 jobs:
   update_pr:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
+    if: ${{ !contains(github.head_ref, 'temp') && !contains(github.head_ref, 'dev_') && github.head_ref != 'master' }}
     steps:
     - uses: tzkhan/pr-update-action@v2
       with:
@@ -26,7 +26,7 @@ jobs:
 
   title-validation:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.head_ref, 'temp') || !contains(github.head_ref, 'dev_') }}
+    if: ${{ !contains(github.head_ref, 'temp') && !contains(github.head_ref, 'dev_') && github.head_ref != 'master' }}
     steps:
     - uses: deepakputhraya/action-pr-title@master
       with:
@@ -40,6 +40,7 @@ jobs:
   
   branch-naming-rules:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.head_ref, 'temp') && !contains(github.head_ref, 'dev_') && github.head_ref != 'master' }}
     steps:
       - uses: deepakputhraya/action-branch-name@master
         with:
