@@ -10,6 +10,6 @@ rules:                      # Array of rules
     mergeUnstable: true   # Required. Can be a branch in the same forked repo.
   - base: dev
     upstream: pavlezt:master
-    mergeMethod: rebase     
+    mergeMethod: merge     
     mergeUnstable: true   # Required. Can be a branch in the same forked repo.
 conflictLabel: "merge-conflict"  # Optional, on merge conflict assign a custom label, Default: merge-conflict
